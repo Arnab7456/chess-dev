@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.filter.invert {
+    filter: invert(100%); /* Invert colors to simulate white pieces */
+  }
+  
