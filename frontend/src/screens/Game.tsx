@@ -22,24 +22,32 @@ export const Game = () => {
         socket.onmessage = (event) => {
             const message = JSON.parse(event.data);
             switch (message.type) {
-                case INIT_GAME:
+                case INIT_GAME: {
                     setBoard(chess.board());
                     setStarted(true);
                     console.log("Game Initialized");
                     break;
-                case MOVE:
-                    const move = message.payload;
+                }
+                case MOVE: {
+                    const move = message.payload; // Wrapped in block
                     chess.move(move);
                     setChess(new Chess(chess.fen())); 
                     setBoard(chess.board()); 
-                    console.log("Move Made");
+                    console.log("Move Made:", move);
                     break;
-                case GAME_OVER:
+                }
+                case GAME_OVER: {
                     console.log("Game Over");
                     setStarted(false); 
                     break;
+                }
+                default: {
+                    console.log("Unknown message type:", message.type);
+                    break;
+                }
             }
         };
+        
     }, [socket, chess]); 
 
     if (!socket) return <div>wait for Golden God's permission</div>;
