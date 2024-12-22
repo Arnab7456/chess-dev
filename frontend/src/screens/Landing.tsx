@@ -1,26 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from '../components/Button';
 import { motion } from "framer-motion";  
+import { buttonVariants, containerVariants, imageVariants } from "../lib/constants/landing.ui";
 
 export const Landing = () => {
     const navigate = useNavigate();
-
-    // Animation variants
-    const containerVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } }
-    };
-
-    const imageVariants = {
-        hidden: { opacity: 0, scale: 0.9 },
-        visible: { opacity: 1, scale: 1, transition: { duration: 1, ease: "easeOut" } }
-    };
-
-    const buttonVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4, ease: "easeOut" } }
-    };
-
     return (
         <motion.div 
             initial="hidden"
@@ -29,9 +13,9 @@ export const Landing = () => {
             className="flex justify-center items-center h-screen bg-gradient-to-br from-black via-[#0a1f0a] to-[#1a3a1a] z-0"
         >
             <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-6xl space-y-8 md:space-y-0 md:px-0">
-                {/* Image Section */}
+               
                 <motion.div 
-                    className="flex justify-center md:w-1/2 md:px-8" // Added padding to separate the image from the text
+                    className="flex justify-center md:w-1/2 md:px-8" 
                     variants={imageVariants}
                 >
                     <img 
@@ -41,9 +25,9 @@ export const Landing = () => {
                     />
                 </motion.div>
 
-                {/* Text and Button Section */}
+                
                 <motion.div 
-                    className="text-center md:text-left md:w-1/2 pt-8 md:pt-16 md:px-8" // Added padding to the text
+                    className="text-center md:text-left md:w-1/2 pt-8 md:pt-16 md:px-8" 
                     variants={containerVariants}
                 >
                     <motion.h1 

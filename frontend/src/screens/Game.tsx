@@ -15,9 +15,7 @@ export const Game = () => {
     const [started, setStarted] = useState(false);
 
     useEffect(() => {
-        if (!socket) {
-            return;
-        }
+        if (!socket) return;
 
         socket.onmessage = (event) => {
             const message = JSON.parse(event.data);
@@ -29,7 +27,7 @@ export const Game = () => {
                     break;
                 }
                 case MOVE: {
-                    const move = message.payload; // Wrapped in block
+                    const move = message.payload;
                     chess.move(move);
                     setChess(new Chess(chess.fen())); 
                     setBoard(chess.board()); 
@@ -50,17 +48,56 @@ export const Game = () => {
         
     }, [socket, chess]); 
 
-    if (!socket) return <div>wait for Golden God's permission</div>;
+    if (!socket) return (
+        <div className="min-h-screen flex items-center justify-center text-white text-lg">
+            loading.....
+        </div>
+    );
 
     return (
-        <div className="justify-center flex">
-            <div className="pt-8 max-w-screen-lg w-full">
-                <div className="grid grid-cols-6 gap-4 w-full">
-                    <div className="col-span-4 w-full flex justify-center">
-                        <ChessBoard chess={chess} setBoard={setBoard} socket={socket} board={board} />
+        <div className="min-h-screen p-4">
+            <div className="max-w-6xl mx-auto">
+                {/* Mobile layout */}
+                <div className="lg:hidden space-y-6">
+                    <div className="w-full">
+                        <ChessBoard 
+                            chess={chess} 
+                            setBoard={setBoard} 
+                            socket={socket} 
+                            board={board} 
+                        />
                     </div>
-                    <div className="col-span-2 bg-slate-900 w-full flex justify-center">
-                        <div className="pt-8">
+                    <div className="w-full bg-slate-900 rounded-lg p-6 flex justify-center">
+                        {!started ? (
+                            <Button
+                                onClick={() => {
+                                    socket.send(
+                                        JSON.stringify({
+                                            type: INIT_GAME,
+                                        })
+                                    );
+                                }}
+                            >
+                                Play
+                            </Button>
+                        ) : (
+                            <div className="text-white text-lg">Game in Progress...</div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Desktop layout */}
+                <div className="hidden lg:grid lg:grid-cols-6 lg:gap-6 w-full">
+                    <div className="col-span-4 w-full flex justify-center">
+                        <ChessBoard 
+                            chess={chess} 
+                            setBoard={setBoard} 
+                            socket={socket} 
+                            board={board} 
+                        />
+                    </div>
+                    <div className="col-span-2 bg-slate-900 rounded-lg p-6 flex justify-center">
+                        <div className="pt-4">
                             {!started ? (
                                 <Button
                                     onClick={() => {
@@ -74,7 +111,7 @@ export const Game = () => {
                                     Play
                                 </Button>
                             ) : (
-                                <div className="text-white">Game in Progress...</div>
+                                <div className="text-white text-lg">Game in Progress...</div>
                             )}
                         </div>
                     </div>
