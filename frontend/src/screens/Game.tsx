@@ -30,17 +30,17 @@ export const Game = () => {
                 case MOVE:
                     const move = message.payload;
                     chess.move(move);
-                    setChess(new Chess(chess.fen())); // Update the chess state
-                    setBoard(chess.board()); // Update the board state
+                    setChess(new Chess(chess.fen())); 
+                    setBoard(chess.board()); 
                     console.log("Move Made");
                     break;
                 case GAME_OVER:
                     console.log("Game Over");
-                    setStarted(false); // Reset started to false when the game is over
+                    setStarted(false); 
                     break;
             }
         };
-    }, [socket, chess]); // Added chess to the dependency array
+    }, [socket, chess]); 
 
     if (!socket) return <div>wait for Golden God's permission</div>;
 

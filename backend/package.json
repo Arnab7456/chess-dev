@@ -1,11 +1,12 @@
 {
   "name": "backend1",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "build": "tsc",
-    "start": "node dist/index.js"
+    "build": "npx tsc",  
+    "start": "node dist/index.js",
+    "dev": "npx tsc -w && node dist/index.js" 
   },
   "keywords": [],
   "author": "",
@@ -13,7 +14,6 @@
   "dependencies": {
     "@types/ws": "^8.5.12",
     "chess.js": "^1.0.0-beta.8",
-    "tsc": "^2.0.4",
     "ws": "^8.18.0"
   },
   "devDependencies": {
